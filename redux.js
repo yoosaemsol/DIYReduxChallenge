@@ -3,11 +3,6 @@ export const actionCreator = (type) => (payload) => ({
   payload,
 }); // Currying
 
-// export const actionCreator = (type, payload) => ({
-//   type,
-//   payload,
-// }); // Currying
-
 export function createStore(reducer) {
   let state;
   let handlers = [];
@@ -25,9 +20,11 @@ export function createStore(reducer) {
     return state;
   }
 
-  return {
-    dispatch,
+  const store = {
     getState,
     subscribe,
+    dispatch,
   };
+
+  return store;
 }

@@ -7,8 +7,37 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>DIY Redux</title>
+    <style>
+      main {
+        padding: 3em;
+      }
+
+      #counter {
+        font-size: 124px;
+        font-weight: bolder;
+      }
+
+      button {
+        padding: 1em;
+        margin-right: 1em;
+      }
+    </style>
   </head>
   <body>
+    <main>
+      <header>
+        <h1>Counter App</h1>
+      </header>
+      <section>
+        <p id="counter"></p>
+        <div>
+          <button id="btn-increase">Increase</button>
+          <button id="btn-async-increase">Async Increase</button>
+          <button id="btn-decrease">Decrease</button>
+          <button id="btn-reset">Reset</button>
+        </div>
+      </section>
+    </main>
     <script src="app.js" type="module"></script>
   </body>
 </html>
