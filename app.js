@@ -2,8 +2,8 @@ function createStore() {
   let state;
   let handlers = [];
 
-  function send() {
-    state = worker(state);
+  function send(action) {
+    state = worker(state, action);
     handlers.forEach((handler) => handler());
   }
 
@@ -22,9 +22,14 @@ function createStore() {
   };
 }
 
-function worker(state = { count: 0 }) {
+function worker(state = { count: 0 }, action) {
   // do something
-  return { ...state, count: state.count + 1 };
+  switch (action.type) {
+    case 'increase':
+      return { ...state, count: state.count + 1 };
+    default:
+      return { ...state };
+  }
 }
 
 const store = createStore(worker);
@@ -33,6 +38,5 @@ store.subscribe(function () {
   console.log(store.getState());
 });
 
-store.send();
-store.send();
-store.send();
+store.send({ type: 'increase' });
+store.send({ type: 'increase' });
