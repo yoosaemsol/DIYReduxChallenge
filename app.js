@@ -1,8 +1,14 @@
 function createStore() {
   let state;
+  let handlers = [];
 
   function send() {
     state = worker(state);
+    handlers.forEach((handler) => handler());
+  }
+
+  function subscribe(handler) {
+    handlers.push(handler);
   }
 
   function getState() {
@@ -12,6 +18,7 @@ function createStore() {
   return {
     send,
     getState,
+    subscribe,
   };
 }
 
@@ -22,7 +29,10 @@ function worker(state = { count: 0 }) {
 
 const store = createStore(worker);
 
-store.send();
-store.send();
+store.subscribe(function () {
+  console.log(store.getState());
+});
 
-console.log(store.getState());
+store.send();
+store.send();
+store.send();
