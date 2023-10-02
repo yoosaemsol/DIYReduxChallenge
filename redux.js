@@ -1,9 +1,19 @@
-export function createStore(worker) {
+export const actionCreator = (type) => (payload) => ({
+  type,
+  payload,
+}); // Currying
+
+// export const actionCreator = (type, payload) => ({
+//   type,
+//   payload,
+// }); // Currying
+
+export function createStore(reducer) {
   let state;
   let handlers = [];
 
-  function send(action) {
-    state = worker(state, action);
+  function dispatch(action) {
+    state = reducer(state, action);
     handlers.forEach((handler) => handler());
   }
 
@@ -16,7 +26,7 @@ export function createStore(worker) {
   }
 
   return {
-    send,
+    dispatch,
     getState,
     subscribe,
   };
