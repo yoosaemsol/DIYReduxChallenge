@@ -3,7 +3,7 @@ export const actionCreator = (type) => (payload) => ({
   payload,
 }); // Currying
 
-export function createStore(reducer) {
+export function createStore(reducer, middlewares = []) {
   let state;
   let handlers = [];
 
@@ -25,6 +25,14 @@ export function createStore(reducer) {
     subscribe,
     dispatch,
   };
+
+  let lastDispatch = dispatch;
+
+  middlewares.forEach((middleware) => {
+    lastDispatch = middleware(store)(lastDispatch);
+  });
+
+  store.dispatch = lastDispatch;
 
   return store;
 }
