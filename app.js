@@ -1,8 +1,9 @@
 import { createStore } from './redux.js';
 import reducer from './reducer.js';
 import * as Actions from './actions.js';
+import { logger } from './logger.js';
 
-const store = createStore(reducer);
+const store = createStore(reducer, [logger]);
 
 const counterDisplay = document.querySelector('#counter');
 const btnIncrease = document.querySelector('#btn-increase');
