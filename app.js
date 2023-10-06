@@ -2,12 +2,22 @@ import { createStore } from './redux.js';
 import reducer from './reducer.js';
 import * as Actions from './actions.js';
 
-const middleware = (store) => (dispatch) => (action) => {
-  console.log('middleware');
+const middleware1 = (store) => (dispatch) => (action) => {
+  console.log('m1 action =>', action);
   dispatch(action);
 };
 
-const store = createStore(reducer, [middleware]);
+const middleware2 = (store) => (dispatch) => (action) => {
+  console.log('m2 action =>', action);
+  dispatch(action);
+};
+
+const middleware3 = (store) => (dispatch) => (action) => {
+  console.log('m3 action =>', action);
+  dispatch(action);
+};
+
+const store = createStore(reducer, [middleware1, middleware2, middleware3]);
 
 const counterDisplay = document.querySelector('#counter');
 const btnIncrease = document.querySelector('#btn-increase');

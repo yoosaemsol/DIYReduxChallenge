@@ -26,6 +26,8 @@ export function createStore(reducer, middlewares = []) {
     dispatch,
   };
 
+  middlewares = Array.from(middlewares).reverse();
+
   let lastDispatch = dispatch;
 
   middlewares.forEach((middleware) => {
