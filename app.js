@@ -1,20 +1,30 @@
 import { createStore } from './redux.js';
 import reducer from './reducer.js';
 import * as Actions from './actions.js';
+import { ASYNC_INCREASE_COUNTER, SET_COUNTER } from './action-type.js';
 
-const middleware1 = (store) => (dispatch) => (action) => {
+const middleware1 = (store) => (next) => (action) => {
   console.log('m1 action =>', action);
-  dispatch(action);
+  next(action);
 };
 
-const middleware2 = (store) => (dispatch) => (action) => {
+const middleware2 = (store) => (next) => (action) => {
   console.log('m2 action =>', action);
-  dispatch(action);
+  if (action.type === SET_COUNTER) {
+    action.payload = 100;
+  }
+  next(action);
 };
 
-const middleware3 = (store) => (dispatch) => (action) => {
+const middleware3 = (store) => (next) => (action) => {
   console.log('m3 action =>', action);
-  dispatch(action);
+  if (action.type === ASYNC_INCREASE_COUNTER) {
+    setTimeout(() => {
+      next(Actions.increase());
+    }, 1000);
+  } else {
+    next(action);
+  }
 };
 
 const store = createStore(reducer, [middleware1, middleware2, middleware3]);
